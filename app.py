@@ -38,18 +38,29 @@ def main():
     st.sidebar.header("Configuration")
     
     # API Configuration
-    st.sidebar.subheader("API Settings")
-    polygon_api_key = st.sidebar.text_input(
-        "Polygon API Key", 
-        value=os.getenv("POLYGON_API_KEY", ""),
-        type="password",
-        help="Get your free API key from polygon.io"
+    st.sidebar.subheader("Data Source")
+    
+    data_source = st.sidebar.radio(
+        "Select Data Source",
+        ["Live API Data", "Demo Data"],
+        help="Use Live API Data for real market data or Demo Data for demonstration purposes"
     )
     
-    if not polygon_api_key:
-        st.error("Please provide a Polygon API key to continue")
-        st.info("You can get a free API key from https://polygon.io/")
-        return
+    if data_source == "Live API Data":
+        polygon_api_key = st.sidebar.text_input(
+            "Polygon API Key", 
+            value=os.getenv("POLYGON_API_KEY", ""),
+            type="password",
+            help="Get your free API key from polygon.io"
+        )
+        
+        if not polygon_api_key:
+            st.error("Please provide a Polygon API key to continue with live data")
+            st.info("You can get a free API key from https://polygon.io/")
+            return
+    else:
+        polygon_api_key = "demo_mode"
+        st.sidebar.info("Using demo data for demonstration purposes")
     
     # Symbol selection
     symbol = st.sidebar.selectbox(
