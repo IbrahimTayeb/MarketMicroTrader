@@ -1,44 +1,0 @@
-Build a systematic trading engine that uses real-time market microstructure data from a public API, generates alpha signals, and simulates algorithmic trade execution based on those signals.  Project Goals:
-1. Ingest and process high-frequency data.
-2. Engineer features relevant to execution quality and trading signals.
-3. Implement and backtest a signal-based strategy.
-4. Simulate a smart order router (SOR) for execution.
-5. Visualize results with PnL breakdowns, latency impacts, slippage, and VWAP comparisons.
- Project Components:
-1. Data Ingestion and Preprocessing
-* Connect to Polygon/Exchange API.
-* Pull Level 2 order book data, trades, bid/ask spreads, volumes.
-* Resample into 1s/5s/1m bars with microstructure metrics:
-    * Order book imbalance
-    * Spread % width
-    * Trade aggressor side
-    * Hidden liquidity proxy
-2. Alpha Signal Generation
-* Use features to predict short-term price movements (1–5 second horizon).
-* Train models:
-    * Logistic regression / XGBoost / Random Forest
-    * Classify PriceUp, PriceDown, Flat
-* Add feature importance analysis.
-3. Backtesting Engine
-* Build or use backtrader to simulate signal-based strategy.
-* Compare naive execution vs. signal-enhanced entry (e.g., wait for tighter spread or higher buy imbalance).
-* Track execution cost, slippage, VWAP performance.
-4. Execution Model
-* Implement basic execution strategies:
-    * Market order
-    * Limit order with intelligent placement (based on imbalance)
-    * TWAP/VWAP simulation
-5. Evaluation and Visualization
-* Plot:
-    * Signal accuracy (confusion matrix)
-    * Strategy equity curve
-    * PnL vs. benchmark
-    * Execution metrics (slippage, fill ratio, latency impact)
-* Create a streamlit dashboard for live demo.
-Integrate Reinforcement Learning for execution policy optimization.
-Connect to paper trading API (e.g. Alpaca) for live testing.
-Add cross-asset signals (e.g., crypto and equities correlation).
- Tools & Libraries:
-* Python (preferred): pandas, numpy, scikit-learn, statsmodels, ccxt, matplotlib, plotly, backtrader or bt, TA-Lib
-* APIs: Polygon.io, Binance, or IEX Cloud (free tiers or sandbox available)
-* Optional R: quantmod, TTR, tidyquant, PerformanceAnalytics
