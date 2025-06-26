@@ -5,13 +5,18 @@ import plotly.graph_objects as go
 import plotly.express as px
 from plotly.subplots import make_subplots
 import datetime
-import os
 from data_ingestion import MarketDataIngestion
 from feature_engineering import FeatureEngineering
 from alpha_signals import AlphaSignalGenerator
 from backtesting import BacktestingEngine
 from execution_simulator import ExecutionSimulator
 import warnings
+import os
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
+
 warnings.filterwarnings('ignore')
 
 # Configure Streamlit page
@@ -47,16 +52,10 @@ def main():
     )
     
     if data_source == "Live API Data":
-        polygon_api_key = st.sidebar.text_input(
-            "Polygon API Key", 
-            value=os.getenv("POLYGON_API_KEY", ""),
-            type="password",
-            help="Get your free API key from polygon.io"
-        )
+        polygon_api_key = os.getenv("API_KEY")
         
         if not polygon_api_key:
-            st.error("Please provide a Polygon API key to continue with live data")
-            st.info("You can get a free API key from https://polygon.io/")
+            st.error("Invalid Polygon API Key")
             return
     else:
         polygon_api_key = "demo_mode"
